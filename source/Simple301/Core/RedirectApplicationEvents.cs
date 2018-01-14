@@ -23,7 +23,9 @@ namespace Simple301.Core
         /// </summary>
         protected override void ApplicationStarting(UmbracoApplicationBase umbracoApplication, ApplicationContext applicationContext)
         {
-            ContentFinderResolver.Current.InsertType<RedirectContentFinder>(0);
+            //Register the Content Finder after the Core Redirect Url Management Content Finder but before Not Found Handlers to avoid redirect loops
+            ContentFinderResolver.Current.InsertTypeBefore<ContentFinderByNotFoundHandlers,RedirectContentFinder>();
+
         }
 
         /// <summary>
